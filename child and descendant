@@ -1,0 +1,19 @@
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+html = urlopen("http://www.pythonscraping.com/pages/page3.html")
+bsObj = BeautifulSoup(html)
+
+# 利用标签树objName.tag.subTag.anotherSubTag形式可以指定需要查找标签的位置
+# .children标签可以找出某个标签下的所有子标签
+# 子标签和后代标签不一样，如过用.descendant会返回所有的后代标签
+for child in bsObj.find("table", {"id": "giftList"}).children:
+    print(child)
+
+# sibling中不会涉及表格的标题
+for sibling in bsObj.find("table",{"id":"giftList"}).tr.next_siblings:
+    print(sibling)
+
+# .next_siblings 返回之后的所有兄弟标签
+# .previous_siblings 返回之前的所有兄弟标签
+# .next_sibling 返回之后的一个兄弟标签
+# .previous_sibling 返回之前的一个兄弟标签
